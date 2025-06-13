@@ -55,6 +55,10 @@ class GamePilahSampah extends JPanel implements ActionListener, KeyListener {
         semuaSampah.add(new SampahAnorganik("mika.png"));
         semuaSampah.add(new SampahAnorganik("sampah_kertas.png"));
         semuaSampah.add(new SampahB3("baterai.png"));
+        semuaSampah.add(new SampahB3("anti_serangga.png"));
+        semuaSampah.add(new SampahB3("lampu.png"));
+        semuaSampah.add(new SampahB3("obat.png"));
+        semuaSampah.add(new SampahB3("sampah_nuklir.png"));
        
     }
 
