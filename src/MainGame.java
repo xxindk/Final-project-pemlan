@@ -1,12 +1,18 @@
+// MainGame.java
 import javax.swing.*;
 import java.awt.*;
+import gui.GamePanelPilahSampah;
 
+/**
+ * Kelas utama untuk menjalankan game Pilah Sampah
+ */
 public class MainGame {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Pilah Sampahmu!");
         JLabel labelStatus = new JLabel("", SwingConstants.CENTER);
         labelStatus.setFont(new Font("Arial", Font.BOLD, 20));
-        GamePilahSampah panel = new GamePilahSampah(labelStatus);
+
+        GamePanelPilahSampah panel = new GamePanelPilahSampah(labelStatus);
 
         frame.setLayout(new BorderLayout());
         frame.add(labelStatus, BorderLayout.NORTH);
@@ -16,4 +22,3 @@ public class MainGame {
         frame.setVisible(true);
     }
 }
-

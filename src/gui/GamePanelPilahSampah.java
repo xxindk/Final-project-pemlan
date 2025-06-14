@@ -1,12 +1,19 @@
+// gui/GamePanelPilahSampah.java
+package gui;
+
+import model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.util.*;
-import javax.imageio.ImageIO;
 
-
-class GamePilahSampah extends JPanel implements ActionListener, KeyListener {
+/**
+ * GUI panel untuk game Pilah Sampah
+ * Menghandle tampilan dan input keyboard
+ * Memanggil logic game di GameLogicPilahSampah (bisa kamu buat refactor lagi supaya dipisah lebih baik)
+ */
+public class GamePanelPilahSampah extends JPanel implements ActionListener, KeyListener {
     private java.util.List<Sampah> semuaSampah = new ArrayList<>();
     private Sampah aktif;
     private BufferedImage background;
@@ -19,7 +26,7 @@ class GamePilahSampah extends JPanel implements ActionListener, KeyListener {
     private JLabel status;
     private int poin;
 
-    public GamePilahSampah(JLabel status) {
+    public GamePanelPilahSampah(JLabel status) {
         this.status = status;
         setFocusable(true);
         addKeyListener(this);
@@ -30,7 +37,7 @@ class GamePilahSampah extends JPanel implements ActionListener, KeyListener {
 
     private void loadAssets() {
         try {
-            background = ImageIO.read(getClass().getResource("/assets/background.png"));
+            background = javax.imageio.ImageIO.read(getClass().getResource("/assets/background.png"));
             tempatOrg = new ImageIcon(getClass().getResource("/assets/tempat_organik.png")).getImage();
             tempatAn = new ImageIcon(getClass().getResource("/assets/tempat_anorganik.png")).getImage();
             tempatB3 = new ImageIcon(getClass().getResource("/assets/tempat_b3.png")).getImage();
@@ -40,26 +47,9 @@ class GamePilahSampah extends JPanel implements ActionListener, KeyListener {
     }
 
     private void initSampah() {
-        semuaSampah.add(new SampahOrganik("daun_kering.png"));
-        semuaSampah.add(new SampahOrganik("kulit_semangka.png"));
-        semuaSampah.add(new SampahOrganik("cangkang_telur.png"));
-        semuaSampah.add(new SampahOrganik("ranting_pohon.png"));
-        semuaSampah.add(new SampahOrganik("sisa_apel.png"));
-        semuaSampah.add(new SampahOrganik("sisa_sayuran.png"));
-        semuaSampah.add(new SampahOrganik("tulang_ikan.png"));
-        semuaSampah.add(new SampahAnorganik("kantong_plastik.png"));
-        semuaSampah.add(new SampahAnorganik("botol_plastik.png"));
-        semuaSampah.add(new SampahAnorganik("bungkus_ciki.png"));
-        semuaSampah.add(new SampahAnorganik("kaleng_minuman.png"));
-        semuaSampah.add(new SampahAnorganik("kardus_bekas.png"));
-        semuaSampah.add(new SampahAnorganik("mika.png"));
-        semuaSampah.add(new SampahAnorganik("sampah_kertas.png"));
-        semuaSampah.add(new SampahB3("baterai.png"));
-        semuaSampah.add(new SampahB3("anti_serangga.png"));
-        semuaSampah.add(new SampahB3("lampu.png"));
-        semuaSampah.add(new SampahB3("obat.png"));
-        semuaSampah.add(new SampahB3("sampah_nuklir.png"));
-       
+        semuaSampah.addAll(SampahOrganik.getAll());
+        semuaSampah.addAll(SampahAnorganik.getAll());
+        semuaSampah.addAll(SampahB3.getAll());
     }
 
     private void restart() {
@@ -68,7 +58,7 @@ class GamePilahSampah extends JPanel implements ActionListener, KeyListener {
         poin = 0;
         animasi = false;
         nextSampah();
-        timer = new javax.swing.Timer(1000 / 60, this); // 60 FPS
+        timer = new javax.swing.Timer(1000 / 60, this);
         timer.start();
         status.setText("Gunakan tombol panah kanan, bawah, kiri untuk memilah sampah");
         repaint();
@@ -76,7 +66,7 @@ class GamePilahSampah extends JPanel implements ActionListener, KeyListener {
 
     private void nextSampah() {
         Random rand = new Random();
-        aktif = semuaSampah.get(rand.nextInt(semuaSampah.size())).clone(); // Buat objek baru
+        aktif = semuaSampah.get(rand.nextInt(semuaSampah.size())).clone();
         waktu = 0;
         animasi = false;
         repaint();
@@ -86,7 +76,7 @@ class GamePilahSampah extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         if (!gameOver && aktif != null) {
             waktu++;
-            if (!animasi && waktu / 60 >= 7) { // 20 detik
+            if (!animasi && waktu / 60 >= 7) {
                 gameOver = true;
                 timer.stop();
                 status.setText("Tekan ENTER untuk mulai");
@@ -99,63 +89,46 @@ class GamePilahSampah extends JPanel implements ActionListener, KeyListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
-        // Gambar background gelap
         if (background != null) {
             g2.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-            g2.setColor(new Color(0, 0, 0, 150)); // gelapkan
+            g2.setColor(new Color(0, 0, 0, 150));
             g2.fillRect(0, 0, getWidth(), getHeight());
         }
-
         drawBins(g2);
-
-        if (aktif != null && aktif.img != null) {
+        if (aktif != null && aktif.getImage() != null) {
             int x = getWidth() / 2 - 90;
             int y = 170;
-
             if (waktu / 60 >= 4) {
                 x += (int) (Math.random() * 10 - 5);
                 y += (int) (Math.random() * 10 - 5);
             }
-
             if (animasi) {
                 x = animX;
                 y = animY;
                 animX += (targetX - animX) / 2;
                 animY += (targetY - animY) / 2;
-
                 if (Math.abs(targetX - animX) < 5 && Math.abs(targetY - animY) < 5) {
                     animasi = false;
                     nextSampah();
                     return;
                 }
             }
-
-            
-          int originalWidth = aktif.img.getWidth(this);
-int originalHeight = aktif.img.getHeight(this);
-int newWidth = (int)(originalWidth * 0.1);
-int newHeight = (int)(originalHeight * 0.1);
-
-g2.drawImage(aktif.img, x, y, newWidth, newHeight, this);
+            int newWidth = (int)(aktif.getImage().getWidth(this) * 0.1);
+            int newHeight = (int)(aktif.getImage().getHeight(this) * 0.1);
+            g2.drawImage(aktif.getImage(), x, y, newWidth, newHeight, this);
         }
         g2.setFont(new Font("Arial", Font.BOLD, 24));
-g2.setColor(Color.WHITE);
-g2.drawString("Skor: " + poin, 65, 40);
-
-
+        g2.setColor(Color.WHITE);
+        g2.drawString("Skor: " + poin, 65, 40);
         if (gameOver) {
             g2.setColor(new Color(255, 255, 255, 180));
             g2.fillRect(0, 0, getWidth(), getHeight());
-
             g2.setFont(new Font("Arial", Font.BOLD, 64));
             g2.setColor(Color.RED);
             g2.drawString("GAME OVER", getWidth() / 2 - 200, getHeight() / 2);
             g2.setFont(new Font("Arial", Font.BOLD, 32));
-
-g2.setColor(Color.BLACK);
-g2.drawString("Total Skor: " + poin, getWidth() / 2 - 120, getHeight() / 2 + 50);
-
+            g2.setColor(Color.BLACK);
+            g2.drawString("Total Skor: " + poin, getWidth() / 2 - 120, getHeight() / 2 + 50);
         }
     }
 
@@ -166,8 +139,7 @@ g2.drawString("Total Skor: " + poin, getWidth() / 2 - 120, getHeight() / 2 + 50)
         if (tempatB3 != null) g2.drawImage(tempatB3, 450, y, 300, 160, this);
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
+    @Override public void keyPressed(KeyEvent e) {
         if (gameOver && e.getKeyCode() == KeyEvent.VK_ENTER) {
             restart();
             return;
