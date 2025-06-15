@@ -12,19 +12,16 @@ public class SampahOrganik extends Sampah {
         super(nama);
     }
 
-    public SampahOrganik(String nama, int level) {
-        super(nama, level);
-    }
-
     @Override
     public String getJenis() {
         return "Organik";
     }
 
-    @Override
-    public Sampah clone() {
-        return new SampahOrganik(this.fileName, this.level);
-    }
+@Override
+public Sampah clone() {
+    return new SampahOrganik(this.fileName);
+}
+
 
     public static List<Sampah> getAll() {
         return Arrays.asList(

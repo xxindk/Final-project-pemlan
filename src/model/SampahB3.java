@@ -11,19 +11,18 @@ public class SampahB3 extends Sampah {
         super(nama);
     }
 
-    public SampahB3(String nama, int level) {
-        super(nama, level);
-    }
+
 
     @Override
     public String getJenis() {
         return "B3";
     }
 
-    @Override
-    public Sampah clone() {
-        return new SampahB3(this.fileName, this.level);
-    }
+ @Override
+public Sampah clone() {
+    return new SampahB3(this.fileName);
+}
+
 
     public static List<Sampah> getAll() {
         return Arrays.asList(
