@@ -3,9 +3,6 @@ package logic;
 import model.*;
 import java.util.*;
 
-/**
- * Class utama untuk mengatur logika game Pilah Sampah
- */
 public class GameLogicPilahSampah {
     private List<Sampah> semuaSampah;
     private Random rand;
@@ -22,7 +19,6 @@ public class GameLogicPilahSampah {
         resetGame();
     }
 
-    // Reset game, dengan method overloading
     public void resetGame() {
         resetGame(0);
     }
@@ -45,16 +41,10 @@ public class GameLogicPilahSampah {
         return gameOver;
     }
 
-    /**
-     * Buat sampah baru secara acak untuk ditampilkan
-     */
     public void nextSampah() {
         aktif = semuaSampah.get(rand.nextInt(semuaSampah.size())).clone();
     }
 
-    /**
-     * Cek jawaban user, return true jika benar, false jika salah (game over)
-     */
     public boolean checkJawaban(String input) {
         if (gameOver || aktif == null) return false;
 

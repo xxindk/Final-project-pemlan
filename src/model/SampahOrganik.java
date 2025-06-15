@@ -1,12 +1,7 @@
-// model/SampahOrganik.java
 package model;
 
 import java.util.*;
 
-/**
- * Subclass SampahOrganik yang mewarisi Sampah
- * Override method getJenis dan clone untuk tipe organik
- */
 public class SampahOrganik extends Sampah {
     public SampahOrganik(String nama) {
         super(nama);
@@ -17,11 +12,10 @@ public class SampahOrganik extends Sampah {
         return "Organik";
     }
 
-@Override
-public Sampah clone() {
-    return new SampahOrganik(this.fileName);
-}
-
+    @Override
+    public Sampah clone() {
+        return new SampahOrganik(this.fileName);
+    }
 
     public static List<Sampah> getAll() {
         return Arrays.asList(

@@ -1,11 +1,7 @@
-// model/SampahAnorganik.java
 package model;
 
 import java.util.*;
 
-/**
- * Subclass SampahAnorganik yang mewarisi Sampah
- */
 public class SampahAnorganik extends Sampah {
     public SampahAnorganik(String nama) {
         super(nama);
@@ -16,10 +12,10 @@ public class SampahAnorganik extends Sampah {
         return "Anorganik";
     }
 
- @Override
-public Sampah clone() {
-    return new SampahAnorganik(this.fileName);
-}
+    @Override
+    public Sampah clone() {
+        return new SampahAnorganik(this.fileName);
+    }
 
     public static List<Sampah> getAll() {
         return Arrays.asList(

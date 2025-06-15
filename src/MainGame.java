@@ -1,11 +1,7 @@
-// MainGame.java
 import javax.swing.*;
 import java.awt.*;
 import gui.GamePanelPilahSampah;
 
-/**
- * Kelas utama untuk menjalankan game Pilah Sampah
- */
 public class MainGame {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Pilah Sampahmu!");
