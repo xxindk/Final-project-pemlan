@@ -19,11 +19,10 @@ public class SampahAnorganik extends Sampah {
 
     public static List<Sampah> getAll() {
         return Arrays.asList(
-            new SampahAnorganik("botol_plastik.png"),
-            new SampahAnorganik("kaleng_minuman.png"),
-            new SampahAnorganik("kardus_bekas.png"),
-            new SampahAnorganik("mika.png"),
-            new SampahAnorganik("sampah_kertas.png")
-        );
+                new SampahAnorganik("botol_plastik.png"),
+                new SampahAnorganik("kaleng_minuman.png"),
+                new SampahAnorganik("kardus_bekas.png"),
+                new SampahAnorganik("mika.png"),
+                new SampahAnorganik("sampah_kertas.png"));
     }
 }

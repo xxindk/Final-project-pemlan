@@ -19,10 +19,9 @@ public class SampahB3 extends Sampah {
 
     public static List<Sampah> getAll() {
         return Arrays.asList(
-            new SampahB3("baterai.png"),
-            new SampahB3("anti_serangga.png"),
-            new SampahB3("lampu.png"),
-            new SampahB3("obat.png")
-        );
+                new SampahB3("baterai.png"),
+                new SampahB3("anti_serangga.png"),
+                new SampahB3("lampu.png"),
+                new SampahB3("obat.png"));
     }
 }

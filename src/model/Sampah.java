@@ -14,6 +14,7 @@ public abstract class Sampah {
     }
 
     public abstract String getJenis();
+
     public abstract Sampah clone();
 
     public Image getImage() {

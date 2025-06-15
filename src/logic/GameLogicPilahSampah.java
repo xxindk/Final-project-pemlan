@@ -46,7 +46,8 @@ public class GameLogicPilahSampah {
     }
 
     public boolean checkJawaban(String input) {
-        if (gameOver || aktif == null) return false;
+        if (gameOver || aktif == null)
+            return false;
 
         if (aktif.getJenis().equals(input)) {
             poin++;
